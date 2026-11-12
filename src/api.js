@@ -1,5 +1,7 @@
 // Cliente mínimo de la API. Usa fetch nativo para no sumar dependencias.
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001'
+// La app apunta exclusivamente a la API del VPS (contenedor docker).
+// Si cambia la IP o el puerto, se modifica únicamente esta línea.
+const API_URL = 'http://100.68.210.113:5001'
 
 async function request(path, options = {}) {
   const res = await fetch(`${API_URL}${path}`, {

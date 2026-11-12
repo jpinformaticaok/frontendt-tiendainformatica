@@ -16,28 +16,15 @@ npm install
 
 ## Configuración
 
-La URL de la API se toma de `VITE_API_URL`. Si no está definida, usa
-`http://localhost:5001`.
+La app apunta **exclusivamente a la API del VPS** (el contenedor docker).
+La URL está fija en `src/api.js`:
 
-Copiá la plantilla:
-
-```bash
-cp .env.example .env
+```js
+const API_URL = 'http://100.68.210.113:5001'
 ```
 
-`.env` para desarrollo local:
-
-```
-VITE_API_URL=http://localhost:5001
-```
-
-`.env` para consumir la API del VPS:
-
-```
-VITE_API_URL=http://100.68.210.113:5001
-```
-
-> `VITE_API_URL` se embebe en el build. Si la cambiás, hay que volver a compilar.
+Si cambia la IP o el puerto, se modifica únicamente esa línea. No usa variables
+de entorno ni archivos `.env`.
 
 ## Correr en desarrollo
 
@@ -64,8 +51,8 @@ python3 -m http.server 4173 --directory dist
 
 ## Consumir la API del VPS
 
-La API está publicada en el puerto **5001**. Para que el navegador pueda llamarla
-desde otro origen, la API tiene CORS habilitado.
+La app siempre llama a `http://100.68.210.113:5001`. Para que el navegador pueda
+hacerlo desde otro origen, la API tiene CORS habilitado.
 
 - Si en el VPS dejaste `CORS_ALLOWED_ORIGINS` vacío, acepta cualquier origen.
 - Si lo configuraste, agregá la URL del frontend, por ejemplo:
@@ -76,7 +63,7 @@ desde otro origen, la API tiene CORS habilitado.
 
   y reiniciá la API con `docker compose up -d` en el VPS.
 
-Si la IP `100.68.210.113` es de Tailscale, la computadora desde donde abrís el
+La IP `100.68.210.113` es de Tailscale: la computadora desde donde abrís el
 frontend tiene que estar en la misma red (tailnet).
 
 ## Funcionalidades
@@ -97,7 +84,6 @@ frontend tiene que estar en la misma red (tailnet).
 ```
 index.html
 vite.config.js
-.env.example
 src/
   main.jsx              → punto de entrada + Bootstrap
   App.jsx               → vista activa y estado de la API
