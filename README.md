@@ -76,6 +76,9 @@ frontend tiene que estar en la misma red (tailnet).
   - Listado en tarjetas con la cantidad de productos.
   - Crear categoría.
   - Botón "Ver productos" que filtra el listado de productos.
+- **Marcas**
+  - Listado con la cantidad de productos de cada marca.
+  - Crear marca (el nombre no se puede repetir).
 - **Estado de la API**
   - Indicador en la barra superior y chequeo cada 20 segundos contra `/health`.
 
@@ -95,6 +98,8 @@ src/
     ProductoForm.jsx
     Categorias.jsx
     CategoriaForm.jsx
+    Marcas.jsx
+    MarcaForm.jsx
     Modal.jsx
 ```
 
@@ -109,3 +114,5 @@ src/
 | DELETE | `/productos/{id}` | Eliminar producto |
 | GET | `/categorias` | Listado de categorías |
 | POST | `/categorias` | Crear categoría |
+| GET | `/marcas` | Listado de marcas |
+| POST | `/marcas` | Crear marca |

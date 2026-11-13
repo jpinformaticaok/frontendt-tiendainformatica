@@ -18,6 +18,7 @@ function BadgeStock({ stock }) {
 export default function Productos({ categoriaInicial, onConsumirCategoriaInicial }) {
   const [productos, setProductos] = useState([])
   const [categorias, setCategorias] = useState([])
+  const [marcas, setMarcas] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
   const [texto, setTexto] = useState('')
@@ -27,12 +28,14 @@ export default function Productos({ categoriaInicial, onConsumirCategoriaInicial
   async function cargar() {
     try {
       setCargando(true)
-      const [listaProductos, listaCategorias] = await Promise.all([
+      const [listaProductos, listaCategorias, listaMarcas] = await Promise.all([
         api.productos.listar(),
         api.categorias.listar(),
+        api.marcas.listar(),
       ])
       setProductos(listaProductos)
       setCategorias(listaCategorias)
+      setMarcas(listaMarcas)
       setError(null)
     } catch (e) {
       setError(e.message)
@@ -254,6 +257,7 @@ export default function Productos({ categoriaInicial, onConsumirCategoriaInicial
           <ProductoForm
             producto={editando === 'nuevo' ? null : editando}
             categorias={categorias}
+            marcas={marcas}
             onGuardar={guardar}
             onCancelar={() => setEditando(null)}
           />

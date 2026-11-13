@@ -34,6 +34,12 @@ export const api = {
       request('/categorias', { method: 'POST', body: JSON.stringify(datos) }),
   },
 
+  marcas: {
+    listar: () => request('/marcas'),
+    crear: (datos) =>
+      request('/marcas', { method: 'POST', body: JSON.stringify(datos) }),
+  },
+
   productos: {
     listar: () => request('/productos'),
     obtener: (id) => request(`/productos/${id}`),

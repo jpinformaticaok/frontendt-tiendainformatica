@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar.jsx'
 import Productos from './components/Productos.jsx'
 import Categorias from './components/Categorias.jsx'
+import Marcas from './components/Marcas.jsx'
 import { api } from './api.js'
 
 export default function App() {
@@ -39,14 +40,16 @@ export default function App() {
     <>
       <Navbar vista={vista} setVista={setVista} apiOnline={apiOnline} />
       <main className="container py-4">
-        {vista === 'productos' ? (
+        {vista === 'productos' && (
           <Productos
             categoriaInicial={categoriaFiltro}
             onConsumirCategoriaInicial={() => setCategoriaFiltro(null)}
           />
-        ) : (
+        )}
+        {vista === 'categorias' && (
           <Categorias onVerProductos={verProductosDeCategoria} />
         )}
+        {vista === 'marcas' && <Marcas />}
       </main>
       <footer className="text-center text-muted small py-4">
         Tienda Informática · API {apiOnline ? 'conectada' : 'sin conexión'}

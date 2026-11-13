@@ -20,6 +20,13 @@ export default function Navbar({ vista, setVista, apiOnline }) {
             >
               Categorías
             </button>
+            <button
+              type="button"
+              className={`btn btn-sm ${vista === 'marcas' ? 'btn-light' : 'btn-outline-light'}`}
+              onClick={() => setVista('marcas')}
+            >
+              Marcas
+            </button>
           </div>
 
           <span

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-export default function ProductoForm({ producto, categorias, onGuardar, onCancelar }) {
+export default function ProductoForm({ producto, categorias, marcas, onGuardar, onCancelar }) {
   const [datos, setDatos] = useState({
     nombre: producto?.nombre ?? '',
-    marca: producto?.marca ?? '',
+    marcaId: producto?.marcaId ?? (marcas[0]?.id ?? ''),
     precio: producto?.precio ?? '',
     stock: producto?.stock ?? 0,
     categoriaId: producto?.categoriaId ?? (categorias[0]?.id ?? ''),
@@ -18,8 +18,11 @@ export default function ProductoForm({ producto, categorias, onGuardar, onCancel
   function enviar(e) {
     e.preventDefault()
 
-    if (!datos.nombre.trim() || !datos.marca.trim()) {
-      return setError('El nombre y la marca son obligatorios.')
+    if (!datos.nombre.trim()) {
+      return setError('El nombre es obligatorio.')
+    }
+    if (!datos.marcaId) {
+      return setError('Tenés que elegir una marca.')
     }
     if (datos.precio === '' || Number(datos.precio) < 0) {
       return setError('El precio debe ser un número mayor o igual a 0.')
@@ -34,7 +37,7 @@ export default function ProductoForm({ producto, categorias, onGuardar, onCancel
     setError('')
     onGuardar({
       nombre: datos.nombre.trim(),
-      marca: datos.marca.trim(),
+      marcaId: Number(datos.marcaId),
       precio: Number(datos.precio),
       stock: Number(datos.stock),
       categoriaId: Number(datos.categoriaId),
@@ -58,16 +61,22 @@ export default function ProductoForm({ producto, categorias, onGuardar, onCancel
 
       <div className="row g-3 mb-3">
         <div className="col-12 col-sm-6">
-          <label className="form-label" htmlFor="marca">Marca</label>
-          <input
-            id="marca"
-            name="marca"
-            className="form-control"
-            value={datos.marca}
+          <label className="form-label" htmlFor="marcaId">Marca</label>
+          <select
+            id="marcaId"
+            name="marcaId"
+            className="form-select"
+            value={datos.marcaId}
             onChange={cambiar}
-            maxLength={80}
             required
-          />
+          >
+            <option value="">Elegí una marca</option>
+            {marcas.map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.nombre}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="col-12 col-sm-6">
           <label className="form-label" htmlFor="categoriaId">Categoría</label>
